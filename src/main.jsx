@@ -1,29 +1,37 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import TaskList from './component/TaskList.jsx'
-import './config/axios'
+import App from './App'
+import Login from './Login'
+import Add from './Add'
+import DetailTask from './DetailTask'
+import './index.css'
 import {
   createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
-import Login from './component/Login.jsx'
-import PrivateRouter from './component/PrivateRouter.jsx'
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
+import Post from './Post'
+// localhost:5173/
+const routerNodemy = createBrowserRouter([{
+  path: '/',
+  element: <>
+    <h1>Header</h1>
+      <Outlet></Outlet>
+    <h1>Footer</h1>
+  </>,
+  children: [
+    {path: '/', element: <App/>},
+    {path: 'add', element: <Add/>},
+    {path: 'login', element: <Login/>}, 
+    {path: 'register', element: <h1>Dang ky</h1>},
+    {path: ':id', element: <DetailTask/>}
+  ],
+  errorElement: <h1>404 Khong tim thay trang</h1>
+}]);
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <PrivateRouter>
-      <TaskList></TaskList>
-    </PrivateRouter>
-  },
-  {
-    path: '/login',
-    element: <Login></Login>
-  }
-])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={routerNodemy}/>
   </React.StrictMode>,
 )

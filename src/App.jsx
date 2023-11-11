@@ -1,83 +1,31 @@
-import { useRef, useState } from "react"
-import {
-  Button,
-  Typography,
-  Row, 
-  Col,
-  Layout,
-  Form,
-  Input,
-  DatePicker,
-  message
-} from 'antd'
-import { 
-  SearchOutlined,
-  PhoneOutlined
- } from '@ant-design/icons';
-import dayjs  from 'dayjs'
-const { Header, Footer, Content, Sider } = Layout
+import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+function App(props){
+  const [data, setData] = useState([])
+  useEffect(()=>{
+      axios({
+        url: 'https://backoffice.nodemy.vn/api/tasks?sort[0]=createdAt:desc'
+      }).then(res=>{
+        setData(res.data.data)
+      })
+      .catch(err=>{
 
-export default function App(){
-  const [messageApi, contextHolder] = message.useMessage();
-  const [form] = Form.useForm()
+      })
+  }, [])
 
   return (
-    <>  
-      {contextHolder}
-      <Form
-        form={form}
-        name="loginForm"
-        onFinish={(values)=>{
-          axios({
-            url: 'https://backoffice.nodemy.vn/api/auth/local',
-            method: 'POST',
-            data: values
-          }).then(res=>{
-            let data = res.data
-            messageApi.info('Ban dang thanh cong')
+      <>
+        <Link to='/add'>Them Task Moi</Link>
+        {
+          data.map(item=>{
+            return <Link key={item?.id} to={`/${item?.id}`}>
+              <h1>{item?.attributes?.title}</h1>
+            </Link>
           })
-          .catch(err=>{
-            messageApi.error('Sai Thong tin tai khoan')
-          })
-
-
-        }}
-        initialValues={{
-          username: 'KhanhNN',
-          password: 'QuanDM'
-        }}
-      >
-        <Form.Item 
-          label="Ho Va Ten"
-          name="identifier"
-        >
-          <Input></Input>
-        </Form.Item>
-        <Form.Item 
-          label="Mat khau"
-          name="password"
-        >
-          <Input.Password></Input.Password>
-        </Form.Item>
-        
-        <Form.Item
-          name="ngaysinh"
-        >
-          <DatePicker></DatePicker>
-        </Form.Item>
-
-        <Button htmlType="submit">Dang Nhap</Button>
-      </Form>
-
-      <Button onClick={()=>{
-        form.setFieldsValue({
-          username: 'Zippo CF',
-          password: 'Cuongdv',
-          ngaysinh: dayjs('2000/10/20')
-        })
-      }}>Fill thong tin</Button>
-    </>
-  ) 
+        }
+      </>
+  )
 }
 
+export default App
