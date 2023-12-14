@@ -3,6 +3,7 @@ import axios from 'axios'
 
 export function useFetch(url){
     const [data, setData] = useState([])
+    const [reload, setReload] = useState(false)
     const [paging, setPaging] = useState({
       page: 1,
       pageSize: 5,
@@ -16,7 +17,7 @@ export function useFetch(url){
         setData(res?.data?.data)
       })
       .catch(err=>{})
-    }, [paging.page, paging.pageSize])   
+    }, [paging.page, paging.pageSize, reload])   
     
-    return [data, setData, paging, setPaging]
+    return [data, setData, paging, setPaging, reload, setReload]
 }
