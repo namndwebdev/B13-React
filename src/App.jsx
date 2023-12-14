@@ -3,7 +3,7 @@ import { useFetch } from './common/customHook'
 import { Link } from 'react-router-dom'
 import {deleteTask} from './services/task'
 function App() {
-  const [data, setData, paging, setPaging, reload, setReload] = useFetch('https://backoffice.nodemy.vn/api/tasks')
+  const [data, setData, paging, setPaging, reload, setReload] = useFetch('/api/tasks')
   async function handleDelete(id){
     try {
       await deleteTask(id)

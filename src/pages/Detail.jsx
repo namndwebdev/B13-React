@@ -5,7 +5,7 @@ import {updateTask} from '../services/task'
 export default function DetailTask(){
     const params = useParams()
 
-    const [data, setData] = useFetch(`https://backoffice.nodemy.vn/api/tasks/${params.idTask}`)
+    const [data, setData] = useFetch(`/api/tasks/${params.idTask}`)
    
     const handleInput = (e)=>{
 

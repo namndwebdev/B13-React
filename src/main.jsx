@@ -5,6 +5,9 @@ import App from './App.jsx'
 import AddTask from './pages/Add.jsx'
 import DetailTask from './pages/Detail.jsx'
 import './index.css'
+import Login from './pages/Login.jsx'
+import axios from 'axios'
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
 
 const routerNodemy = createBrowserRouter([
   {
@@ -17,6 +20,9 @@ const routerNodemy = createBrowserRouter([
   },{
     path: '/add',
     element: <AddTask/>
+  },{
+    path: '/login',
+    element: <Login/>
   }
 ])
 
